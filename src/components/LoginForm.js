@@ -12,11 +12,11 @@ export const Loginform = function () {
         <input type="text" placeholder="Password" />
         <Button> Login </Button>
       </form>
-      <div>
+      <div className={style.textContainer}>
         <p>
           <span> or </span>
         </p>
-        <a href="#">
+        <a href="#" className={style.link}>
           <span> create an account </span>
         </a>
       </div>
