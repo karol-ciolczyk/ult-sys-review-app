@@ -1,15 +1,9 @@
 .button {
-  /* width: 20rem;
-  height: 5rem; */
   border: none;
   border-radius: 8px;
   color: #fff;
   font-weight: bold;
-  margin: 1.8rem auto;
   cursor: pointer;
-}
-.button:hover {
-  background: #db8400;
 }
 .button--large {
   font-size: 2rem;
@@ -24,6 +18,12 @@
 .button--primary {
   background: #ff9900;
 }
+.button--primary:hover {
+  background: #db8400;
+}
 .button--secondary {
   background: #ff3d00;
+}
+.button--secondary:hover {
+  background: #ce3000;
 }

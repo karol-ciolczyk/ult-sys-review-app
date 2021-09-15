@@ -1,10 +1,13 @@
 .TasksContainer {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 70vw;
   height: 80vh;
   margin: auto;
   margin-top: 2rem;
-  padding: 5rem;
+  padding: 4rem;
   background-color: #2d2d2d;
   box-shadow: 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
 }
@@ -23,4 +26,43 @@
   border: 2px solid #ff9900;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 5rem 0rem;
+}
+.buttons-container {
+  text-align: end;
+}
+.buttons-container button {
+  margin: 2rem 2rem;
+}
+
+.buttons-bottom {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.buttons-bottom button {
+  /* margin-right: 5rem; */
+}
+.buttons-bottom a {
+  position: relative;
+  text-decoration: none;
+  color: #ff9900;
+  font-size: 4rem;
+  font-weight: lighter;
+}
+.buttons-bottom a::after {
+  position: absolute;
+  content: "";
+  top: -0.3rem;
+  left: 0rem;
+  height: 100%;
+  width: 100%;
+  border: 1px solid #ff9900;
+  border-radius: 0.5rem;
+  opacity: 0;
+  z-index: 2;
+}
+.buttons-bottom a:hover::after {
+  transition: 300ms;
+  opacity: 0.45;
+  transform: scale(1.2);
 }

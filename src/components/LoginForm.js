@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Button } from "./Button";
 
 import style from "./LoginForm.module.css";
@@ -10,10 +9,7 @@ export const Loginform = function () {
       <form className={style.form}>
         <input type="text" placeholder="Email or username" />
         <input type="text" placeholder="Password" />
-        <Button size="small" color="secondary">
-          {" "}
-          Login{" "}
-        </Button>
+        <Button> Login </Button>
       </form>
       <div className={style.textContainer}>
         <p>
