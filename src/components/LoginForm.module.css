@@ -16,12 +16,15 @@
   border: none;
   width: 100%;
   height: 4rem;
-  margin: 1rem;
+  margin: 1rem auto;
   font-size: 1.6rem;
   padding: 0rem 1rem;
   background: #ffffff;
   box-shadow: 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   border-radius: 0.8rem;
+}
+.form button {
+  margin: 3rem auto;
 }
 .textContainer {
   margin-top: 4rem;

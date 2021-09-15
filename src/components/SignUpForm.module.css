@@ -17,6 +17,9 @@
   margin: auto;
   justify-content: center;
 }
+.form button {
+  margin: 3rem auto;
+}
 .form input {
   border: none;
   width: 100%;
