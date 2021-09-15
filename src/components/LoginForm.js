@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
+import { Button } from "./Button";
 
 import style from "./LoginForm.module.css";
 
 export const Loginform = function () {
   return (
-    <div className={style.signForm}>
-      <h1> Login </h1>
+    <div className={style.loginForm}>
+      <h1 className={style.header}> Login </h1>
       <form>
         <input type="text" placeholder="Email or username" />
         <input type="text" placeholder="Password" />
-        <button type="submit"> Login </button>
+        <Button> Login </Button>
       </form>
       <div>
         <p>
