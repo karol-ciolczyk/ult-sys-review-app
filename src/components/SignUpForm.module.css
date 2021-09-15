@@ -1,0 +1,30 @@
+.header {
+  font-size: 4rem;
+  color: #ff9900;
+  margin-bottom: 8rem;
+  margin-top: 3rem;
+}
+.buttonBack {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  cursor: pointer;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin: auto;
+  justify-content: center;
+}
+.form input {
+  border: none;
+  width: 100%;
+  height: 4rem;
+  margin: 1rem;
+  font-size: 1.6rem;
+  padding: 0rem 1rem;
+  background: #ffffff;
+  box-shadow: 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+  border-radius: 0.8rem;
+}

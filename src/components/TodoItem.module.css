@@ -1,0 +1,15 @@
+.todoItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2d2d2d;
+  border-radius: 0.8rem;
+  height: 5rem;
+  width: 45vw;
+  margin: auto;
+  color: #fff;
+  font-size: 1.4rem;
+}
+.todoItem__item {
+  flex-basis: 33%;
+}

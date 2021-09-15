@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 4rem;
+}
+.container input {
+  margin-top: 0.8rem;
+  border: 1px solid black;
+}
+.task {
+  text-align: start;
+  flex-grow: 1;
+  border-bottom: 0.1rem solid #ff9900;
+  padding-top: 1.5rem;
+  padding-left: 0.7rem;
+  margin-left: 1rem;
+}
+.task span {
+  color: #fff;
+  font-size: 1.6rem;
+}

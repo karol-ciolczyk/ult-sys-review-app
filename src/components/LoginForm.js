@@ -5,16 +5,19 @@ import style from "./LoginForm.module.css";
 
 export const Loginform = function () {
   return (
-    <div className={style.loginForm}>
+    <div>
       <h1 className={style.header}> Login </h1>
-      <form>
+      <form className={style.form}>
         <input type="text" placeholder="Email or username" />
         <input type="text" placeholder="Password" />
-        <Button> Login </Button>
+        <Button size="small" color="secondary">
+          {" "}
+          Login{" "}
+        </Button>
       </form>
       <div className={style.textContainer}>
         <p>
-          <span> or </span>
+          <span className={style.text}> or </span>
         </p>
         <a href="#" className={style.link}>
           <span> create an account </span>
