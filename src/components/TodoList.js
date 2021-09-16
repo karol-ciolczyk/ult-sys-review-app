@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { Modal } from "./Modal";
 import { TodoItem } from "./TodoItem";
+import { TodoTasks } from "./TodoTasks";
 
 import style from "./TodoList.module.css";
 
@@ -28,15 +30,20 @@ export const TodoList = function () {
   }, []);
 
   return (
-    <div className={style.container}>
-      {todoLists.map((list) => (
-        <TodoItem
-          key={list.id}
-          name={list.name}
-          date={list.created_at}
-          tasks={list.task}
-        />
-      ))}
-    </div>
+    <>
+      <div className={style.container}>
+        {todoLists.map((list) => (
+          <TodoItem
+            key={list.id}
+            name={list.name}
+            date={list.created_at}
+            tasks={list.task}
+          />
+        ))}
+      </div>
+      <Modal>
+        <TodoTasks />
+      </Modal>
+    </>
   );
 };
