@@ -45,6 +45,9 @@ export const TodoList = function () {
 
   return (
     <>
+      <span className="material-icons" style={{ color: "white" }}>
+        add_circle_outline
+      </span>
       <div className={style.container}>
         {todoLists.map((list) => (
           <TodoItem

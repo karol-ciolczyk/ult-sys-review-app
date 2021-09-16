@@ -13,13 +13,13 @@ export const TodoItem = function (props) {
   };
   return (
     <div className={style.todoItem} onClick={onClickHannlder}>
-      <div className={style.todoItem__item}>
+      <div className={style.todoItem__name}>
         <span>{name}</span>
       </div>
-      <div className={style.todoItem__item}>
+      <div className={style.todoItem__date}>
         <span>{`created at: ${time}`}</span>
       </div>
-      <div className={style.todoItem__item}>
+      <div className={style.todoItem__amount}>
         <span>{`Completed: ${completed}, Uncompleted: ${unCompleted}, All: ${allTasks}`}</span>
       </div>
     </div>
