@@ -1,16 +1,23 @@
 import style from "./TodoItem.module.css";
 
-export const TodoItem = function () {
+export const TodoItem = function (props) {
+  const { name, tasks, date } = props;
+
+  const allTasks = tasks.length;
+  const completed = tasks.filter((task) => task.isDone).length;
+  const unCompleted = tasks.filter((task) => !task.isDone).length;
+  const time = date.slice(0, 10);
+
   return (
     <div className={style.todoItem}>
       <div className={style.todoItem__item}>
-        <span>List name</span>
+        <span>{name}</span>
       </div>
       <div className={style.todoItem__item}>
-        <span>List data create</span>
+        <span>{`created at: ${time}`}</span>
       </div>
       <div className={style.todoItem__item}>
-        <span>list content: tasks</span>
+        <span>{`Completed: ${completed}, Uncompleted: ${unCompleted}, All: ${allTasks}`}</span>
       </div>
     </div>
   );

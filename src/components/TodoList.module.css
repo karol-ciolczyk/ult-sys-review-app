@@ -1,0 +1,6 @@
+.container {
+  margin: auto;
+  width: 80vw;
+  min-height: 80vh;
+  padding: 10rem;
+}
