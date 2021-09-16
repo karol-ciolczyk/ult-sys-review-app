@@ -5,20 +5,21 @@ import { Button } from "./Button";
 import style from "./TodoTasks.module.css";
 import { useEffect } from "react";
 
-const fetchNewTaskState = async function (id, newdata) {
+const fetchNewTaskState = async function (isAddNewTask, id, newdata) {
+  const endPoint = isAddNewTask
+    ? `https://recruitment.ultimate.systems/to-do-lists`
+    : `https://recruitment.ultimate.systems/to-do-lists/${id}`;
+  const method = isAddNewTask ? "POST" : "PUT";
   try {
-    const response = await fetch(
-      `https://recruitment.ultimate.systems/to-do-lists/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjE3LCJpYXQiOjE2MzE3ODQxMzIsImV4cCI6MTYzNDM3NjEzMn0.mm0cUlTSZEhA1oHSMC-y0ttb1iUlUgkxNqeEbz9jDjQ`,
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: JSON.stringify(newdata),
-      }
-    );
+    const response = await fetch(`${endPoint}`, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjE3LCJpYXQiOjE2MzE3ODQxMzIsImV4cCI6MTYzNDM3NjEzMn0.mm0cUlTSZEhA1oHSMC-y0ttb1iUlUgkxNqeEbz9jDjQ`,
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(newdata),
+    });
     const data = await response.json();
     console.log(response);
     console.log(data);
@@ -32,13 +33,13 @@ export const TodoTasks = function (props) {
   const [newTask, setNewTask] = useState({ isDone: false, name: "" });
   const { todoLists } = props;
 
-  console.log(props.isAddNewTask, chosenList);
+  console.log(props.isAddNewTask, chosenList, newTask);
 
   const onClickHandler = function (event) {
     if (event.target.textContent !== "CANCEL") event.stopPropagation();
 
     if (event.target.textContent === "SAVE") {
-      fetchNewTaskState(chosenList.id, chosenList);
+      fetchNewTaskState(props.isAddNewTask, chosenList.id, chosenList);
     }
     if (event.target.textContent === "Add" && newTask.name) {
       setChosenList((prev) => {
@@ -70,6 +71,14 @@ export const TodoTasks = function (props) {
   const onSubmitHandler = function (event) {
     event.preventDefault();
     event.target.reset();
+  };
+  const newListNameHandler = function (event) {
+    setChosenList((prev) => {
+      return {
+        ...prev,
+        name: event.target.value,
+      };
+    });
   };
 
   //// create option elements based on an obtained data
@@ -104,12 +113,16 @@ export const TodoTasks = function (props) {
         {props.isAddNewTask && (
           <>
             <h2> Create New List </h2>
-            <input type="text" placeholder="new list name" />
+            <input
+              type="text"
+              placeholder="new list name"
+              onChange={newListNameHandler}
+            />
           </>
         )}
         <hr className={style.breakLine} />
         <div className={style.tasksList}>
-          {chosenList?.task.map((task) => (
+          {chosenList?.task?.map((task) => (
             <TaskItem key={task.id} name={task.name} isDone={task.isDone} />
           ))}
         </div>
