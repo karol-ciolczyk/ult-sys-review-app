@@ -35,13 +35,13 @@ export const TodoList = function () {
     setIsModal(!isModal);
     if (listId) {
       const findedList = todoLists.find((list) => list.id === listId);
-      console.log(findedList);
+      // console.log(findedList);
       setFindedList(findedList);
       //  setListId(listId);
     }
   };
 
-  console.log(findedList);
+  // console.log(findedList);
 
   return (
     <>

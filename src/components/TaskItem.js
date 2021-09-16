@@ -1,21 +1,31 @@
 import style from "./TaskItem.module.css";
 
 export const TaskItem = function (props) {
-  let { name, isDone } = props;
+  let { name, isDone, isActive } = props;
 
   return (
     <div className={style.container}>
       <input
+        className={style.checkbox}
         type="checkbox"
-        id="vehicle1"
-        name="vehicle1"
-        value="Bike"
+        id="task"
+        name="isDone"
         defaultChecked={isDone}
+        onChange={props.onChangeHandler}
       />
       <p className={style.task}>
         <span>
-          {isDone && <strike> {name} </strike>}
-          {!isDone && name}
+          {!isActive && isDone && <strike> {name} </strike>}
+          {!isActive && !isDone && name}
+          {isActive && (
+            <input
+              type="text"
+              name="name"
+              placeholder="add new task"
+              className={style.input}
+              onChange={props.onChangeHandler}
+            />
+          )}
         </span>
       </p>
     </div>

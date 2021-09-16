@@ -8,7 +8,7 @@ export const TodoItem = function (props) {
   const unCompleted = tasks.filter((task) => !task.isDone).length;
   const time = date.slice(0, 10);
 
-  const onClickHannlder = function (event) {
+  const onClickHannlder = function () {
     props.onClickHandler(props.id);
   };
   return (
