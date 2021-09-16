@@ -4,6 +4,8 @@ import { Button } from "./Button";
 import style from "./TodoTasks.module.css";
 
 export const TodoTasks = function (props) {
+  const { todoLists, tasks } = props;
+
   const onClickHandler = function (event) {
     if (event.target.textContent !== "CANCEL") event.stopPropagation();
   };
@@ -12,15 +14,15 @@ export const TodoTasks = function (props) {
     <div className={style.TasksContainer} onClick={onClickHandler}>
       <div>
         <select className={style.selectElement}>
-          <option value="todolist1"> Todolist 1</option>
-          <option value="todolist2"> Todolist 2</option>
-          <option value="todolist3"> Todolist 3</option>
-          <option value="todolist4"> Todolist 4</option>
-          <option value="todolist5"> Todolist 5</option>
+          {todoLists.map((list) => (
+            <option key={list.id} value={list.id}>
+              {list.name}
+            </option>
+          ))}
         </select>
         <hr className={style.breakLine} />
         <div className={style.tasksList}>
-          {props.tasks.map((task) => (
+          {tasks.map((task) => (
             <TaskItem key={task.id} name={task.name} isDone={task.isDone} />
           ))}
         </div>

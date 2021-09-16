@@ -5,18 +5,13 @@ export const TaskItem = function (props) {
 
   return (
     <div className={style.container}>
-      {isDone && (
-        <input
-          type="checkbox"
-          id="vehicle1"
-          name="vehicle1"
-          value="Bike"
-          checked
-        />
-      )}
-      {!isDone && (
-        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-      )}
+      <input
+        type="checkbox"
+        id="vehicle1"
+        name="vehicle1"
+        value="Bike"
+        defaultChecked={isDone}
+      />
       <p className={style.task}>
         <span>
           {isDone && <strike> {name} </strike>}

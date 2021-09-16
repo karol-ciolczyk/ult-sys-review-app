@@ -59,7 +59,7 @@ export const TodoList = function () {
       </div>
       {isModal && (
         <Modal onClickHandler={onClickHandler}>
-          <TodoTasks tasks={tasks} />
+          <TodoTasks tasks={tasks} todoLists={todoLists} />
         </Modal>
       )}
     </>

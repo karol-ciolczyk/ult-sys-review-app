@@ -4,8 +4,8 @@
   height: 4rem;
 }
 .container input {
-  margin-top: 0.8rem;
-  border: 1px solid black;
+  margin-top: 1.2rem;
+  border: 0.1rem solid black;
 }
 .task {
   text-align: start;
