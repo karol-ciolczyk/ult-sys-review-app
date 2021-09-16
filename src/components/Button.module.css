@@ -19,11 +19,13 @@
   background: #ff9900;
 }
 .button--primary:hover {
+  transition: 300ms;
   background: #db8400;
 }
 .button--secondary {
   background: #ff3d00;
 }
 .button--secondary:hover {
+  transition: 300ms;
   background: #ce3000;
 }
