@@ -8,7 +8,7 @@ import style from "./TodoList.module.css";
 export const TodoList = function () {
   const [todoLists, setTodoLists] = useState([]);
   const [isModal, setIsModal] = useState(false);
-  const [tasks, setTasks] = useState([]);
+  const [findedList, setFindedList] = useState([]);
 
   useEffect(() => {
     (async function () {
@@ -36,12 +36,12 @@ export const TodoList = function () {
     if (listId) {
       const findedList = todoLists.find((list) => list.id === listId);
       console.log(findedList);
-      setTasks(findedList.task);
+      setFindedList(findedList);
       //  setListId(listId);
     }
   };
 
-  console.log(todoLists);
+  console.log(findedList);
 
   return (
     <>
@@ -59,7 +59,7 @@ export const TodoList = function () {
       </div>
       {isModal && (
         <Modal onClickHandler={onClickHandler}>
-          <TodoTasks tasks={tasks} todoLists={todoLists} />
+          <TodoTasks todoList={findedList} todoLists={todoLists} />
         </Modal>
       )}
     </>

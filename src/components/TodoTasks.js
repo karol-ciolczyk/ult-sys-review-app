@@ -1,24 +1,42 @@
+import { useState } from "react/cjs/react.development";
 import { TaskItem } from "./TaskItem";
 
 import { Button } from "./Button";
 import style from "./TodoTasks.module.css";
 
 export const TodoTasks = function (props) {
-  const { todoLists, tasks } = props;
+  const [tasks, setTasks] = useState(props.todoList.task);
+  const { todoList, todoLists } = props;
 
   const onClickHandler = function (event) {
     if (event.target.textContent !== "CANCEL") event.stopPropagation();
+  };
+  const onChangeHandler = function (event) {
+    const id = event.target.value;
+    const findedTodoList = todoLists.find((list) => list.id === +id);
+    const newListOfTasks = findedTodoList.task;
+
+    setTasks(newListOfTasks);
+  };
+
+  //// create option elements based on an obtained data
+  const getOptionElements = function () {
+    const optionElements = todoLists.map((list) => {
+      const isSelected = todoList.id === list.id;
+      return (
+        <option key={list.id} value={list.id} selected={isSelected}>
+          {list.name}
+        </option>
+      );
+    });
+    return optionElements;
   };
 
   return (
     <div className={style.TasksContainer} onClick={onClickHandler}>
       <div>
-        <select className={style.selectElement}>
-          {todoLists.map((list) => (
-            <option key={list.id} value={list.id}>
-              {list.name}
-            </option>
-          ))}
+        <select className={style.selectElement} onChange={onChangeHandler}>
+          {getOptionElements()}
         </select>
         <hr className={style.breakLine} />
         <div className={style.tasksList}>
