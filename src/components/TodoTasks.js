@@ -3,9 +3,13 @@ import { TaskItem } from "./TaskItem";
 import { Button } from "./Button";
 import style from "./TodoTasks.module.css";
 
-export const TodoTasks = function () {
+export const TodoTasks = function (props) {
+  const onClickHandler = function (event) {
+    if (event.target.textContent !== "CANCEL") event.stopPropagation();
+  };
+
   return (
-    <div className={style.TasksContainer}>
+    <div className={style.TasksContainer} onClick={onClickHandler}>
       <div>
         <select className={style.selectElement}>
           <option value="todolist1"> Todolist 1</option>
@@ -16,7 +20,9 @@ export const TodoTasks = function () {
         </select>
         <hr className={style.breakLine} />
         <div className={style.tasksList}>
-          <TaskItem />
+          {props.tasks.map((task) => (
+            <TaskItem key={task.id} name={task.name} isDone={task.isDone} />
+          ))}
         </div>
         <div className={style[`buttons-container`]}>
           <Button color="secondary" size="small">

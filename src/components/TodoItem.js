@@ -8,8 +8,11 @@ export const TodoItem = function (props) {
   const unCompleted = tasks.filter((task) => !task.isDone).length;
   const time = date.slice(0, 10);
 
+  const onClickHannlder = function (event) {
+    props.onClickHandler(props.id);
+  };
   return (
-    <div className={style.todoItem}>
+    <div className={style.todoItem} onClick={onClickHannlder}>
       <div className={style.todoItem__item}>
         <span>{name}</span>
       </div>

@@ -1,5 +1,13 @@
 import style from "./Modal.module.css";
 
 export const Modal = function (props) {
-  return <div className={style.modal}>{props.children}</div>;
+  const onClickHandler = function () {
+    props.onClickHandler();
+  };
+
+  return (
+    <div className={style.modal} onClick={onClickHandler}>
+      {props.children}
+    </div>
+  );
 };
