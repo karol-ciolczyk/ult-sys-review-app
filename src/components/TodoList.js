@@ -16,21 +16,16 @@ export const TodoList = function () {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjE3LCJpYXQiOjE2MzE3ODQxMzIsImV4cCI6MTYzNDM3NjEzMn0.mm0cUlTSZEhA1oHSMC-y0ttb1iUlUgkxNqeEbz9jDjQ`,
-              // 'Content-Type': 'application/x-www-form-urlencoded',
             },
           }
         );
-        // console.log(response);
         const data = await response.json();
-        // console.log(data);
         setTodoLists(data);
       } catch (err) {
         console.log(err);
       }
     })();
   }, []);
-
-  // console.log(todoLists);
 
   return (
     <div className={style.container}>
