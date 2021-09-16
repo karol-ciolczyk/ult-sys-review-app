@@ -3,6 +3,7 @@ import { TaskItem } from "./TaskItem";
 
 import { Button } from "./Button";
 import style from "./TodoTasks.module.css";
+import { useEffect } from "react";
 
 const fetchNewTaskState = async function (id, newdata) {
   try {
@@ -27,9 +28,11 @@ const fetchNewTaskState = async function (id, newdata) {
 };
 
 export const TodoTasks = function (props) {
-  const [chosenList, setChosenList] = useState(props.todoList);
+  const [chosenList, setChosenList] = useState(null);
   const [newTask, setNewTask] = useState({ isDone: false, name: "" });
   const { todoLists } = props;
+
+  console.log(props.isAddNewTask, chosenList);
 
   const onClickHandler = function (event) {
     if (event.target.textContent !== "CANCEL") event.stopPropagation();
@@ -39,9 +42,10 @@ export const TodoTasks = function (props) {
     }
     if (event.target.textContent === "Add" && newTask.name) {
       setChosenList((prev) => {
+        const prevTasks = chosenList?.task ? chosenList.task : [];
         return {
           ...prev,
-          task: [...chosenList.task, newTask],
+          task: [...prevTasks, newTask],
         };
       });
       setNewTask({ isDone: false, name: "" });
@@ -71,7 +75,7 @@ export const TodoTasks = function (props) {
   //// create option elements based on an obtained data
   const getOptionElements = function () {
     const optionElements = todoLists.map((list) => {
-      const isSelected = chosenList.id === list.id;
+      const isSelected = chosenList?.id === list.id;
       return (
         <option key={list.id} value={list.id} selected={isSelected}>
           {list.name}
@@ -81,17 +85,31 @@ export const TodoTasks = function (props) {
     return optionElements;
   };
 
-  // console.log(chosenList);
+  useEffect(() => {
+    if (props.isAddNewTask) return;
+    setChosenList(props.todoList);
+    return () => {
+      setChosenList(null); // clear after modal closed
+    };
+  }, [props.todoList, props.isAddNewTask]);
 
   return (
     <div className={style.TasksContainer} onClick={onClickHandler}>
       <div>
-        <select className={style.selectElement} onChange={onChangeHandler}>
-          {getOptionElements()}
-        </select>
+        {!props.isAddNewTask && (
+          <select className={style.selectElement} onChange={onChangeHandler}>
+            {getOptionElements()}
+          </select>
+        )}
+        {props.isAddNewTask && (
+          <>
+            <h2> Create New List </h2>
+            <input type="text" placeholder="new list name" />
+          </>
+        )}
         <hr className={style.breakLine} />
         <div className={style.tasksList}>
-          {chosenList.task.map((task) => (
+          {chosenList?.task.map((task) => (
             <TaskItem key={task.id} name={task.name} isDone={task.isDone} />
           ))}
         </div>

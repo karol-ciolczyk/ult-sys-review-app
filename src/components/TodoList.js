@@ -7,8 +7,13 @@ import style from "./TodoList.module.css";
 
 export const TodoList = function () {
   const [todoLists, setTodoLists] = useState([]);
-  const [isModal, setIsModal] = useState(false);
-  const [findedList, setFindedList] = useState([]);
+  // const [isModal, setIsModal] = useState(false);
+  const [modal, setModal] = useState({
+    isOpen: false,
+    isAddNewTask: false,
+  });
+  // const [isAddNewTask, setIsAddNewTask] = useState(false);
+  const [foundList, setFoundList] = useState([]);
 
   useEffect(() => {
     (async function () {
@@ -32,23 +37,35 @@ export const TodoList = function () {
   }, []);
 
   const onClickHandler = function (listId) {
-    setIsModal(!isModal);
+    // setIsModal(!isModal);
+    setModal((prev) => {
+      return {
+        ...prev,
+        isOpen: !prev.isOpen,
+        isAddNewTask: false,
+      };
+    });
     if (listId) {
       const findedList = todoLists.find((list) => list.id === listId);
-      // console.log(findedList);
-      setFindedList(findedList);
-      //  setListId(listId);
+      setFoundList(findedList);
     }
   };
-
-  // console.log(findedList);
+  const onAddListHandler = function (event) {
+    setModal((prev) => {
+      return {
+        ...prev,
+        isOpen: !prev.isOpen,
+        isAddNewTask: true,
+      };
+    });
+  };
 
   return (
     <>
-      <span className="material-icons" style={{ color: "white" }}>
-        add_circle_outline
-      </span>
       <div className={style.container}>
+        <div className={style.addIcon} onClick={onAddListHandler}>
+          <span className="material-icons">add_circle_outline</span>
+        </div>
         {todoLists.map((list) => (
           <TodoItem
             key={list.id}
@@ -60,9 +77,13 @@ export const TodoList = function () {
           />
         ))}
       </div>
-      {isModal && (
+      {modal.isOpen && (
         <Modal onClickHandler={onClickHandler}>
-          <TodoTasks todoList={findedList} todoLists={todoLists} />
+          <TodoTasks
+            todoList={foundList}
+            todoLists={todoLists}
+            isAddNewTask={modal.isAddNewTask}
+          />
         </Modal>
       )}
     </>
