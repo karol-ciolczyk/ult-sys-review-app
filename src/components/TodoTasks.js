@@ -37,6 +37,15 @@ export const TodoTasks = function (props) {
     if (event.target.textContent === "SAVE") {
       fetchNewTaskState(chosenList.id, chosenList);
     }
+    if (event.target.textContent === "Add" && newTask.name) {
+      setChosenList((prev) => {
+        return {
+          ...prev,
+          task: [...chosenList.task, newTask],
+        };
+      });
+      setNewTask({ isDone: false, name: "" });
+    }
   };
   const onChangeHandler = function (event) {
     const id = event.target.value;
@@ -56,14 +65,6 @@ export const TodoTasks = function (props) {
   };
   const onSubmitHandler = function (event) {
     event.preventDefault();
-
-    setChosenList((prev) => {
-      return {
-        ...prev,
-        task: [...chosenList.task, newTask],
-      };
-    });
-
     event.target.reset();
   };
 
@@ -80,7 +81,7 @@ export const TodoTasks = function (props) {
     return optionElements;
   };
 
-  console.log(chosenList);
+  // console.log(chosenList);
 
   return (
     <div className={style.TasksContainer} onClick={onClickHandler}>
@@ -103,7 +104,9 @@ export const TodoTasks = function (props) {
             <Button color="secondary" size="small">
               Cancel
             </Button>
-            <Button size="small"> Add </Button>
+            <Button size="small" onClick={onClickHandler}>
+              Add
+            </Button>
           </div>
         </form>
       </div>
