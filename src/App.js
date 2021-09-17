@@ -7,7 +7,7 @@ import { Card } from "./components/Card";
 import { Loginform } from "./components/LoginForm";
 import { SignUpForm } from "./components/SignUpForm";
 import { TodoList } from "./components/TodoList";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   const [jwt, setJwt] = useState(null);

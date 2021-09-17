@@ -166,9 +166,8 @@ export const TodoTasks = function (props) {
   //// create option elements based on an obtained data
   const getOptionElements = function () {
     const optionElements = todoLists.currentLists.map((list) => {
-      const isSelected = chosenList?.id === list.id;
       return (
-        <option key={list.id} value={list.id} selected={isSelected}>
+        <option key={list.id} value={list.id}>
           {list.name}
         </option>
       );
@@ -190,7 +189,11 @@ export const TodoTasks = function (props) {
     <div className={style.TasksContainer} onClick={onClickHandler}>
       <div>
         {!props.isAddNewTask && (
-          <select className={style.selectElement} onChange={onChangeHandler}>
+          <select
+            className={style.selectElement}
+            onChange={onChangeHandler}
+            value={chosenList?.id}
+          >
             {getOptionElements()}
           </select>
         )}

@@ -53,7 +53,7 @@ export const TodoList = function (props) {
         console.log(err);
       }
     })();
-  }, [triggerAction.triggerFetch]);
+  }, [triggerAction.triggerFetch, ctx.token]);
 
   const onClickHandler = function (listId) {
     // setIsModal(!isModal);
