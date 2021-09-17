@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button } from "./Button";
+import { Link } from "react-router-dom";
 
 import style from "./LoginForm.module.css";
 
-export const Loginform = function () {
+export const Loginform = function (props) {
   const [loginData, setLoginData] = useState();
 
   const onInputChangeValueHandler = function (event) {
@@ -17,7 +18,6 @@ export const Loginform = function () {
 
   const onSubmitHandler = function (event) {
     event.preventDefault();
-    console.log(loginData);
 
     (async function () {
       try {
@@ -27,32 +27,16 @@ export const Loginform = function () {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: JSON.stringify(loginData),
           }
         );
         const data = await response.json();
-        console.log(response, data);
         if (!response.ok) {
           throw TypeError(data.message[0].messages[0].message);
         }
-        console.log(response, data.jwt);
-
-        const response2 = await fetch(
-          "https://recruitment.ultimate.systems/to-do-lists",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${data.jwt}`,
-              // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-          }
-        );
-        console.log(response2);
-        const data2 = await response2.json();
-        console.log(data2);
+        // console.log(response, data.jwt);
+        props.setJwt(data.jwt);
       } catch (err) {
         console.log(err);
       }
@@ -81,9 +65,11 @@ export const Loginform = function () {
         <p>
           <span className={style.text}> or </span>
         </p>
-        <a href="#" className={style.link}>
-          <span> create an account </span>
-        </a>
+        <Link to="/signup" style={{ textDecoration: "none" }}>
+          <a href="#" className={style.link}>
+            <span> create an account </span>
+          </a>
+        </Link>
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
+import { useState } from "react/cjs/react.development";
 import { UserSessionContext } from "./context/UserSesionContext";
 
+import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { Card } from "./components/Card";
 import { Loginform } from "./components/LoginForm";
@@ -8,20 +10,21 @@ import { SignUpForm } from "./components/SignUpForm";
 // import { TodoList } from "./components/TodoList";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import "./App.css";
-
 function App() {
+  const [jwt, setJwt] = useState(null);
+  console.log(jwt);
+
   return (
     <UserSessionContext.Provider
       value={{
-        token: "",
+        token: jwt,
       }}
     >
       <Router>
         <div className="App">
           <Navbar />
           <Card>
-            <Loginform />
+            <Loginform setJwt={setJwt} />
           </Card>
           <Card>
             <SignUpForm />
