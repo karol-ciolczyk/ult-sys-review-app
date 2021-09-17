@@ -4,6 +4,7 @@ import "./materialIcons.css";
 export const Navbar = function (props) {
   const onLogOutHandler = function () {
     props.setJwt(null);
+    localStorage.removeItem("jwt");
   };
 
   return (

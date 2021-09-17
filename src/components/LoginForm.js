@@ -18,6 +18,7 @@ export const Loginform = function (props) {
 
   const onSubmitHandler = function (event) {
     event.preventDefault();
+    props.setIsProgress(true);
 
     (async function () {
       try {
@@ -36,6 +37,8 @@ export const Loginform = function (props) {
           throw TypeError(data.message[0].messages[0].message);
         }
         // console.log(response, data.jwt);
+        props.setIsProgress(false);
+        localStorage.setItem("jwt", `${data.jwt}`);
         props.setJwt(data.jwt);
       } catch (err) {
         console.log(err);

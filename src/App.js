@@ -1,4 +1,4 @@
-import { useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react/cjs/react.development";
 import { UserSessionContext } from "./context/UserSesionContext";
 
 import "./App.css";
@@ -11,7 +11,13 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
   const [jwt, setJwt] = useState(null);
-  console.log(jwt);
+  const [isProgress, setIsProgress] = useState(false);
+  console.log(isProgress);
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) setJwt(jwt);
+  }, []);
 
   return (
     <UserSessionContext.Provider
@@ -26,7 +32,7 @@ function App() {
             {!jwt && (
               <Route exact path="/">
                 <Card>
-                  <Loginform setJwt={setJwt} />
+                  <Loginform setJwt={setJwt} setIsProgress={setIsProgress} />
                 </Card>
               </Route>
             )}
