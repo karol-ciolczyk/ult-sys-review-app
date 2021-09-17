@@ -5,7 +5,7 @@ import { TodoTasks } from "./TodoTasks";
 
 import style from "./TodoList.module.css";
 
-export const TodoList = function () {
+export const TodoList = function (props) {
   const [todoLists, setTodoLists] = useState({
     todoLists: [],
     beenSearched: [],
@@ -19,7 +19,6 @@ export const TodoList = function () {
     triggerFetch: false,
     triggerProgressState: false,
   });
-  console.log(triggerAction.triggerProgressState);
 
   useEffect(() => {
     (async function () {
@@ -56,6 +55,7 @@ export const TodoList = function () {
 
   const onClickHandler = function (listId) {
     // setIsModal(!isModal);
+    props.setIsBlur((prev) => !prev);
     setModal((prev) => {
       return {
         ...prev,
@@ -69,6 +69,7 @@ export const TodoList = function () {
     }
   };
   const onAddListHandler = function (event) {
+    props.setIsBlur((prev) => !prev);
     setModal((prev) => {
       return {
         ...prev,
@@ -131,7 +132,10 @@ export const TodoList = function () {
 
   return (
     <>
-      <div className={style.container}>
+      <div
+        className={style.container}
+        style={{ filter: `${modal.isOpen ? "blur(6px)" : "blur(0px)"}` }}
+      >
         <div className={style.addIcon} onClick={onAddListHandler}>
           <span className="material-icons">post_add</span>
         </div>

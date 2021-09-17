@@ -12,6 +12,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 function App() {
   const [jwt, setJwt] = useState(null);
   const [isProgress, setIsProgress] = useState(false);
+  const [isBlur, setIsBlur] = useState(false);
+  console.log(isBlur);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
@@ -27,7 +29,9 @@ function App() {
       <Router>
         <Switch>
           <div className="App">
-            <Navbar setJwt={setJwt} />
+            <div style={{ filter: `${isBlur ? "blur(6px)" : "blur(0px)"}` }}>
+              <Navbar setJwt={setJwt} />
+            </div>
             {!jwt && (
               <Route exact path="/">
                 {!isProgress && (
@@ -58,7 +62,7 @@ function App() {
             </Route>
             {jwt && (
               <Route exact path="/">
-                <TodoList />
+                <TodoList setIsBlur={setIsBlur} />
               </Route>
             )}
           </div>
