@@ -36,7 +36,6 @@ export const Loginform = function (props) {
         if (!response.ok) {
           throw TypeError(data.message[0].messages[0].message);
         }
-        // console.log(response, data.jwt);
         props.setIsProgress(false);
         localStorage.setItem("jwt", `${data.jwt}`);
         props.setJwt(data.jwt);
@@ -69,10 +68,8 @@ export const Loginform = function (props) {
         <p>
           <span className={style.text}> or </span>
         </p>
-        <Link to="/signup" style={{ textDecoration: "none" }}>
-          <a href="#" className={style.link}>
-            <span> create an account </span>
-          </a>
+        <Link to="/signup" href="#" className={style.link}>
+          <span> create an account </span>
         </Link>
       </div>
     </div>

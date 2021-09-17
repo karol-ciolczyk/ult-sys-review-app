@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "./Button";
 
 import style from "./SignUpForm.module.css";
@@ -44,7 +45,11 @@ export const SignUpForm = function () {
 
   return (
     <div className={style.SignUpForm}>
-      <button className={style.buttonBack}> back </button>
+      <Link to="/">
+        <div className={style.buttonBack}>
+          <span class="material-icons">west</span>
+        </div>
+      </Link>
       <h1 className={style.header}> Create an new account </h1>
       <form className={style.form} onSubmit={onSubmitHandler}>
         <input
