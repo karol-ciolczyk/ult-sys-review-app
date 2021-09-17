@@ -16,15 +16,6 @@ export const TodoTasks = function (props) {
     removedLists: [],
   });
 
-  // console.log(
-  //   props.isAddNewTask,
-  //   chosenList,
-  //   newTask,
-  //   cancelButton.current,
-  //   todoLists,
-  //   todoListssss
-  // );
-
   const fetchNewTaskState = async function (method, id, isAddNewTask, newdata) {
     const body = method === "DELETE" ? "" : JSON.stringify(newdata);
     let endPoint = isAddNewTask
@@ -150,7 +141,6 @@ export const TodoTasks = function (props) {
 
   ////// <SELECT> ELEMENT SERVICE //////
   const onChangeHandler = function (event) {
-    console.log(event.target.value);
     const id = event.target.value;
     const findedTodoList = todoLists.currentLists.find(
       (list) => list.id === +id
