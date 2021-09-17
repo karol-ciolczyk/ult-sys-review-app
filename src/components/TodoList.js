@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserSessionContext } from "../context/UserSesionContext";
 import { Modal } from "./Modal";
 import { TodoItem } from "./TodoItem";
 import { TodoTasks } from "./TodoTasks";
@@ -6,6 +7,8 @@ import { TodoTasks } from "./TodoTasks";
 import style from "./TodoList.module.css";
 
 export const TodoList = function (props) {
+  const ctx = useContext(UserSessionContext);
+  console.log(ctx);
   const [todoLists, setTodoLists] = useState({
     todoLists: [],
     beenSearched: [],
@@ -29,7 +32,7 @@ export const TodoList = function (props) {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjE3LCJpYXQiOjE2MzE3ODQxMzIsImV4cCI6MTYzNDM3NjEzMn0.mm0cUlTSZEhA1oHSMC-y0ttb1iUlUgkxNqeEbz9jDjQ`,
+              Authorization: `Bearer ${ctx.token}`,
             },
           }
         );
