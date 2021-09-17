@@ -133,7 +133,7 @@ export const TodoList = function () {
     <>
       <div className={style.container}>
         <div className={style.addIcon} onClick={onAddListHandler}>
-          <span className="material-icons">add_circle_outline</span>
+          <span className="material-icons">post_add</span>
         </div>
         <div className={style.sortInputs}>
           <input
