@@ -139,7 +139,7 @@ export const TodoList = function (props) {
         <div className={style.addIcon} onClick={onAddListHandler}>
           <span className="material-icons">post_add</span>
         </div>
-        <div className={style.sortInputs}>
+        <div className={style.inputsContainer}>
           <input
             type="text"
             placeholder="find list"

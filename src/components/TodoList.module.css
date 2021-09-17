@@ -17,3 +17,20 @@
   color: #ff9900;
   transform: scale(1.1);
 }
+
+.inputsContainer {
+  width: 70%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+.inputsContainer input,
+select {
+  padding-left: 1rem;
+  height: 3rem;
+  background: #ffffff;
+  border: none;
+  box-shadow: 0rem 0.4rem 0.4rem rgb(0 0 0 / 25%);
+  border-radius: 0.5rem;
+  font-size: 1.6rem;
+}
