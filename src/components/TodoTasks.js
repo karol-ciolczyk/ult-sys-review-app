@@ -39,7 +39,6 @@ export const TodoTasks = function (props) {
     currentLists: props.todoLists,
     removedLists: [],
   });
-  // const { todoLists } = props;
 
   // console.log(
   //   props.isAddNewTask,
@@ -52,6 +51,7 @@ export const TodoTasks = function (props) {
   console.log(todoLists);
 
   const onClickHandler = function (event) {
+    console.log(event.target.textContent);
     if (event.target.textContent !== "CANCEL") event.stopPropagation();
 
     if (event.target.textContent === "Remove List") {
@@ -69,15 +69,15 @@ export const TodoTasks = function (props) {
           removedLists: [...prev.removedLists, removedItem[0].id],
         };
       });
-
-      // if (window.confirm("Do you reallly want to delte list ?"))
-      //   fetchNewTaskState("DELETE", chosenList.id);
     }
-    if (event.target.textContent === "SAVE") {
-      if (todoLists.removedLists.length > 0) {
-        todoLists.removedLists.forEach((listId) =>
-          fetchNewTaskState("DELETE", listId)
-        );
+    if (todoLists.removedLists.length > 0) {
+      // are there any removed lists ?
+      if (event.target.textContent === "SAVE") {
+        if (window.confirm("Do you reallly want to delte list ?")) {
+          todoLists.removedLists.forEach((listId) =>
+            fetchNewTaskState("DELETE", listId)
+          );
+        }
       }
       const requestMethod = props.isAddNewTask ? "POST" : "PUT";
       fetchNewTaskState(
@@ -98,14 +98,6 @@ export const TodoTasks = function (props) {
       });
       setNewTask({ isDone: false, name: "" });
     }
-  };
-  const onChangeHandler = function (event) {
-    const id = event.target.value;
-    const findedTodoList = todoLists.currentLists.find(
-      (list) => list.id === +id
-    );
-
-    setChosenList(findedTodoList);
   };
   const onChangeNewTaskInputValue = function (event) {
     const inputName = event.target.name;
@@ -130,6 +122,21 @@ export const TodoTasks = function (props) {
     });
   };
 
+  ////// <SELECT> ELEMENT SERVICE //////
+  const onChangeHandler = function (event) {
+    console.log(event.target.value);
+    const id = event.target.value;
+    const findedTodoList = todoLists.currentLists.find(
+      (list) => list.id === +id
+    );
+
+    setChosenList(findedTodoList);
+  };
+  //// change tasks-list content after todo-list removed
+  useEffect(() => {
+    if (!chosenList) return;
+    setChosenList(todoLists.currentLists[0]);
+  }, [todoLists.currentLists]);
   //// create option elements based on an obtained data
   const getOptionElements = function () {
     const optionElements = todoLists.currentLists.map((list) => {
@@ -142,7 +149,9 @@ export const TodoTasks = function (props) {
     });
     return optionElements;
   };
+  /////////////// END ///////////////////////
 
+  //// CLEAR CHOSEN LEAST AFTER MODAL CLOSED
   useEffect(() => {
     if (props.isAddNewTask) return;
     setChosenList(props.todoList);
@@ -181,12 +190,12 @@ export const TodoTasks = function (props) {
             onChangeHandler={onChangeNewTaskInputValue}
           />
           <div className={style[`buttons-container`]}>
+            <Button size="small">Add</Button>
             {!props.isAddNewTask && (
               <Button color="secondary" size="small">
                 Remove List
               </Button>
             )}
-            <Button size="small">Add</Button>
           </div>
         </form>
       </div>
