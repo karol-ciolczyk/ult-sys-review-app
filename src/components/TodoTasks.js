@@ -35,11 +35,11 @@ export const TodoTasks = function (props) {
   const cancelButton = useRef(null);
   const [chosenList, setChosenList] = useState(null);
   const [newTask, setNewTask] = useState({ isDone: false, name: "" });
-  const [todoListssss, setTodoLists] = useState({
+  const [todoLists, setTodoLists] = useState({
     currentLists: props.todoLists,
     removedLists: [],
   });
-  const { todoLists } = props;
+  // const { todoLists } = props;
 
   // console.log(
   //   props.isAddNewTask,
@@ -49,16 +49,16 @@ export const TodoTasks = function (props) {
   //   todoLists,
   //   todoListssss
   // );
-  console.log(todoListssss);
+  console.log(todoLists);
 
   const onClickHandler = function (event) {
     if (event.target.textContent !== "CANCEL") event.stopPropagation();
 
     if (event.target.textContent === "Remove List") {
       const listId = chosenList.id;
-      let current = [...todoListssss.currentLists];
+      let current = [...todoLists.currentLists];
       const indexToRemove = current.findIndex((list) => list.id === listId);
-      console.log(chosenList, todoLists, todoListssss, indexToRemove);
+      console.log(chosenList, todoLists, todoLists, indexToRemove);
       const removedItem = current.splice(indexToRemove, 1); // remove item and return this item
       console.log(current);
 
@@ -74,6 +74,11 @@ export const TodoTasks = function (props) {
       //   fetchNewTaskState("DELETE", chosenList.id);
     }
     if (event.target.textContent === "SAVE") {
+      if (todoLists.removedLists.length > 0) {
+        todoLists.removedLists.forEach((listId) =>
+          fetchNewTaskState("DELETE", listId)
+        );
+      }
       const requestMethod = props.isAddNewTask ? "POST" : "PUT";
       fetchNewTaskState(
         requestMethod,
@@ -96,7 +101,9 @@ export const TodoTasks = function (props) {
   };
   const onChangeHandler = function (event) {
     const id = event.target.value;
-    const findedTodoList = todoLists.find((list) => list.id === +id);
+    const findedTodoList = todoLists.currentLists.find(
+      (list) => list.id === +id
+    );
 
     setChosenList(findedTodoList);
   };
@@ -125,7 +132,7 @@ export const TodoTasks = function (props) {
 
   //// create option elements based on an obtained data
   const getOptionElements = function () {
-    const optionElements = todoLists.map((list) => {
+    const optionElements = todoLists.currentLists.map((list) => {
       const isSelected = chosenList?.id === list.id;
       return (
         <option key={list.id} value={list.id} selected={isSelected}>
