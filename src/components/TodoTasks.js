@@ -197,8 +197,9 @@ export const TodoTasks = function (props) {
         )}
         {props.isAddNewTask && (
           <>
-            <h2> Create New List </h2>
+            <h2 className={style.header}> Create New List </h2>
             <input
+              className={style.newNameInput}
               type="text"
               placeholder="new list name"
               onChange={newListNameHandler}
