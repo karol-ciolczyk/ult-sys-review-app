@@ -3,13 +3,16 @@ import { TaskItem } from "./TaskItem";
 
 import { Button } from "./Button";
 import style from "./TodoTasks.module.css";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-const fetchNewTaskState = async function (isAddNewTask, id, newdata) {
-  const endPoint = isAddNewTask
+const fetchNewTaskState = async function (method, id, isAddNewTask, newdata) {
+  const body = method === "DELETE" ? "" : JSON.stringify(newdata);
+  let endPoint = isAddNewTask
     ? `https://recruitment.ultimate.systems/to-do-lists`
     : `https://recruitment.ultimate.systems/to-do-lists/${id}`;
-  const method = isAddNewTask ? "POST" : "PUT";
+
+  console.log(endPoint, method);
+
   try {
     const response = await fetch(`${endPoint}`, {
       method,
@@ -18,7 +21,7 @@ const fetchNewTaskState = async function (isAddNewTask, id, newdata) {
         Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjE3LCJpYXQiOjE2MzE3ODQxMzIsImV4cCI6MTYzNDM3NjEzMn0.mm0cUlTSZEhA1oHSMC-y0ttb1iUlUgkxNqeEbz9jDjQ`,
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify(newdata),
+      body,
     });
     const data = await response.json();
     console.log(response);
@@ -29,17 +32,56 @@ const fetchNewTaskState = async function (isAddNewTask, id, newdata) {
 };
 
 export const TodoTasks = function (props) {
+  const cancelButton = useRef(null);
   const [chosenList, setChosenList] = useState(null);
   const [newTask, setNewTask] = useState({ isDone: false, name: "" });
+  const [todoListssss, setTodoLists] = useState({
+    currentLists: props.todoLists,
+    removedLists: [],
+  });
   const { todoLists } = props;
 
-  console.log(props.isAddNewTask, chosenList, newTask);
+  // console.log(
+  //   props.isAddNewTask,
+  //   chosenList,
+  //   newTask,
+  //   cancelButton.current,
+  //   todoLists,
+  //   todoListssss
+  // );
+  console.log(todoListssss);
 
   const onClickHandler = function (event) {
     if (event.target.textContent !== "CANCEL") event.stopPropagation();
 
+    if (event.target.textContent === "Remove List") {
+      const listId = chosenList.id;
+      let current = [...todoListssss.currentLists];
+      const indexToRemove = current.findIndex((list) => list.id === listId);
+      console.log(chosenList, todoLists, todoListssss, indexToRemove);
+      const removedItem = current.splice(indexToRemove, 1); // remove item and return this item
+      console.log(current);
+
+      setTodoLists((prev) => {
+        return {
+          ...prev,
+          currentLists: current,
+          removedLists: [...prev.removedLists, removedItem[0].id],
+        };
+      });
+
+      // if (window.confirm("Do you reallly want to delte list ?"))
+      //   fetchNewTaskState("DELETE", chosenList.id);
+    }
     if (event.target.textContent === "SAVE") {
-      fetchNewTaskState(props.isAddNewTask, chosenList.id, chosenList);
+      const requestMethod = props.isAddNewTask ? "POST" : "PUT";
+      fetchNewTaskState(
+        requestMethod,
+        chosenList.id,
+        props.isAddNewTask,
+        chosenList
+      );
+      cancelButton.current.click(); // to close modal
     }
     if (event.target.textContent === "Add" && newTask.name) {
       setChosenList((prev) => {
@@ -132,18 +174,20 @@ export const TodoTasks = function (props) {
             onChangeHandler={onChangeNewTaskInputValue}
           />
           <div className={style[`buttons-container`]}>
-            <Button color="secondary" size="small">
-              Cancel
-            </Button>
-            <Button size="small" onClick={onClickHandler}>
-              Add
-            </Button>
+            {!props.isAddNewTask && (
+              <Button color="secondary" size="small">
+                Remove List
+              </Button>
+            )}
+            <Button size="small">Add</Button>
           </div>
         </form>
       </div>
       <div>
         <div className={style[`buttons-bottom`]}>
-          <a href="#">CANCEL</a>
+          <a ref={cancelButton} href="#">
+            CANCEL
+          </a>
           <Button onClick={onClickHandler}>SAVE</Button>
         </div>
       </div>
