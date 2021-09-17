@@ -5,32 +5,6 @@ import { Button } from "./Button";
 import style from "./TodoTasks.module.css";
 import { useEffect, useRef } from "react";
 
-const fetchNewTaskState = async function (method, id, isAddNewTask, newdata) {
-  const body = method === "DELETE" ? "" : JSON.stringify(newdata);
-  let endPoint = isAddNewTask
-    ? `https://recruitment.ultimate.systems/to-do-lists`
-    : `https://recruitment.ultimate.systems/to-do-lists/${id}`;
-
-  console.log(endPoint, method);
-
-  try {
-    const response = await fetch(`${endPoint}`, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjE3LCJpYXQiOjE2MzE3ODQxMzIsImV4cCI6MTYzNDM3NjEzMn0.mm0cUlTSZEhA1oHSMC-y0ttb1iUlUgkxNqeEbz9jDjQ`,
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    });
-    const data = await response.json();
-    console.log(response);
-    console.log(data);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 export const TodoTasks = function (props) {
   const cancelButton = useRef(null);
   const [chosenList, setChosenList] = useState(null);
@@ -48,7 +22,36 @@ export const TodoTasks = function (props) {
   //   todoLists,
   //   todoListssss
   // );
-  console.log(todoLists);
+
+  const fetchNewTaskState = async function (method, id, isAddNewTask, newdata) {
+    const body = method === "DELETE" ? "" : JSON.stringify(newdata);
+    let endPoint = isAddNewTask
+      ? `https://recruitment.ultimate.systems/to-do-lists`
+      : `https://recruitment.ultimate.systems/to-do-lists/${id}`;
+
+    try {
+      const response = await fetch(`${endPoint}`, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjE3LCJpYXQiOjE2MzE3ODQxMzIsImV4cCI6MTYzNDM3NjEzMn0.mm0cUlTSZEhA1oHSMC-y0ttb1iUlUgkxNqeEbz9jDjQ`,
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body,
+      });
+      const data = await response.json();
+      console.log(response);
+      console.log(data);
+      props.setTriggerAction((prev) => {
+        return {
+          ...prev,
+          triggerFetch: !prev.triggerFetch,
+        };
+      }); // this triggers fetch for updated lists in TodoList.js component
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const onClickHandler = function (event) {
     console.log(event.target.textContent);
@@ -70,15 +73,7 @@ export const TodoTasks = function (props) {
         };
       });
     }
-    if (todoLists.removedLists.length > 0) {
-      // are there any removed lists ?
-      if (event.target.textContent === "SAVE") {
-        if (window.confirm("Do you reallly want to delte list ?")) {
-          todoLists.removedLists.forEach((listId) =>
-            fetchNewTaskState("DELETE", listId)
-          );
-        }
-      }
+    if (event.target.textContent === "SAVE") {
       const requestMethod = props.isAddNewTask ? "POST" : "PUT";
       fetchNewTaskState(
         requestMethod,
@@ -86,6 +81,20 @@ export const TodoTasks = function (props) {
         props.isAddNewTask,
         chosenList
       );
+      // are there any removed lists ?
+      if (todoLists.removedLists.length > 0) {
+        if (window.confirm("Do you reallly want to delte list ?")) {
+          todoLists.removedLists.forEach((listId) =>
+            fetchNewTaskState("DELETE", listId)
+          );
+        }
+      }
+      props.setTriggerAction((prev) => {
+        return {
+          ...prev,
+          triggerProgressState: true,
+        };
+      });
       cancelButton.current.click(); // to close modal
     }
     if (event.target.textContent === "Add" && newTask.name) {
@@ -100,6 +109,8 @@ export const TodoTasks = function (props) {
     }
   };
   const onChangeNewTaskInputValue = function (event) {
+    console.log(event.target.id, chosenList);
+    const hasTargetId = event.target.id;
     const inputName = event.target.name;
     setNewTask((prev) => {
       return {
@@ -108,6 +119,22 @@ export const TodoTasks = function (props) {
           inputName === "name" ? event.target.value : event.target.checked,
       };
     });
+    console.log(inputName, hasTargetId);
+    if (inputName === "isDone" && hasTargetId) {
+      const taskIndex = chosenList.task.findIndex(
+        (task) => task.id === +hasTargetId
+      );
+      const newTasks = chosenList.task.map((el) => {
+        return { ...el };
+      });
+      newTasks[`${taskIndex}`].isDone = event.target.checked;
+      setChosenList((prev) => {
+        return {
+          ...prev,
+          task: newTasks,
+        };
+      });
+    }
   };
   const onSubmitHandler = function (event) {
     event.preventDefault();
@@ -181,7 +208,13 @@ export const TodoTasks = function (props) {
         <hr className={style.breakLine} />
         <div className={style.tasksList}>
           {chosenList?.task?.map((task) => (
-            <TaskItem key={task.id} name={task.name} isDone={task.isDone} />
+            <TaskItem
+              key={task.id}
+              name={task.name}
+              isDone={task.isDone}
+              taskId={task.id}
+              onChangeHandler={onChangeNewTaskInputValue}
+            />
           ))}
         </div>
         <form onSubmit={onSubmitHandler}>

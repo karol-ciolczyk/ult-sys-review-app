@@ -15,6 +15,11 @@ export const TodoList = function () {
     isAddNewTask: false,
   });
   const [foundList, setFoundList] = useState([]);
+  const [triggerAction, setTriggerAction] = useState({
+    triggerFetch: false,
+    triggerProgressState: false,
+  });
+  console.log(triggerAction.triggerProgressState);
 
   useEffect(() => {
     (async function () {
@@ -30,6 +35,12 @@ export const TodoList = function () {
           }
         );
         const data = await response.json();
+        setTriggerAction((prev) => {
+          return {
+            ...prev,
+            triggerProgressState: false,
+          };
+        });
         setTodoLists((prev) => {
           return {
             ...prev,
@@ -41,7 +52,7 @@ export const TodoList = function () {
         console.log(err);
       }
     })();
-  }, []);
+  }, [triggerAction.triggerFetch]);
 
   const onClickHandler = function (listId) {
     // setIsModal(!isModal);
@@ -138,16 +149,22 @@ export const TodoList = function () {
             <option value="name-down">by name ascending</option>
           </select>
         </div>
-        {todoLists.beenSearched.map((list) => (
-          <TodoItem
-            key={list.id}
-            name={list.name}
-            date={list.created_at}
-            tasks={list.task}
-            onClickHandler={onClickHandler}
-            id={list.id}
-          />
-        ))}
+        {triggerAction.triggerProgressState && (
+          <h1 style={{ color: "white", marginTop: "10rem" }}>
+            ... wait for fetch new data
+          </h1>
+        )}
+        {!triggerAction.triggerProgressState &&
+          todoLists.beenSearched.map((list) => (
+            <TodoItem
+              key={list.id}
+              name={list.name}
+              date={list.created_at}
+              tasks={list.task}
+              onClickHandler={onClickHandler}
+              id={list.id}
+            />
+          ))}
       </div>
       {modal.isOpen && (
         <Modal onClickHandler={onClickHandler}>
@@ -155,6 +172,7 @@ export const TodoList = function () {
             todoList={foundList}
             todoLists={todoLists.beenSearched}
             isAddNewTask={modal.isAddNewTask}
+            setTriggerAction={setTriggerAction}
           />
         </Modal>
       )}

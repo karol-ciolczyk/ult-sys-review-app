@@ -8,7 +8,7 @@ export const TaskItem = function (props) {
       <input
         className={style.checkbox}
         type="checkbox"
-        id="task"
+        id={props.taskId}
         name="isDone"
         defaultChecked={isDone}
         onChange={props.onChangeHandler}
