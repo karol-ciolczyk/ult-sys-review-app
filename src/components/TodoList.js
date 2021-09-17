@@ -8,7 +8,6 @@ import style from "./TodoList.module.css";
 
 export const TodoList = function (props) {
   const ctx = useContext(UserSessionContext);
-  console.log(ctx);
   const [todoLists, setTodoLists] = useState({
     todoLists: [],
     beenSearched: [],

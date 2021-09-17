@@ -13,7 +13,6 @@ function App() {
   const [jwt, setJwt] = useState(null);
   const [isProgress, setIsProgress] = useState(false);
   const [isBlur, setIsBlur] = useState(false);
-  console.log(isBlur);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");

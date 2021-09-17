@@ -21,6 +21,7 @@
 .inputsContainer {
   width: 70%;
   margin: auto;
+  margin-bottom: 5rem;
   display: flex;
   justify-content: space-between;
 }

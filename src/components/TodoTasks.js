@@ -1,11 +1,13 @@
 import { useState } from "react/cjs/react.development";
+import { UserSessionContext } from "../context/UserSesionContext";
 import { TaskItem } from "./TaskItem";
 
 import { Button } from "./Button";
 import style from "./TodoTasks.module.css";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 
 export const TodoTasks = function (props) {
+  const ctx = useContext(UserSessionContext);
   const cancelButton = useRef(null);
   const [chosenList, setChosenList] = useState(null);
   const [newTask, setNewTask] = useState({ isDone: false, name: "" });
@@ -34,7 +36,7 @@ export const TodoTasks = function (props) {
         method,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjE3LCJpYXQiOjE2MzE3ODQxMzIsImV4cCI6MTYzNDM3NjEzMn0.mm0cUlTSZEhA1oHSMC-y0ttb1iUlUgkxNqeEbz9jDjQ`,
+          Authorization: `Bearer ${ctx.token}`,
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body,
@@ -54,7 +56,6 @@ export const TodoTasks = function (props) {
   };
 
   const onClickHandler = function (event) {
-    console.log(event.target.textContent);
     if (event.target.textContent !== "CANCEL") event.stopPropagation();
 
     if (event.target.textContent === "Remove List") {
@@ -109,7 +110,6 @@ export const TodoTasks = function (props) {
     }
   };
   const onChangeNewTaskInputValue = function (event) {
-    console.log(event.target.id, chosenList);
     const hasTargetId = event.target.id;
     const inputName = event.target.name;
     setNewTask((prev) => {
@@ -119,7 +119,6 @@ export const TodoTasks = function (props) {
           inputName === "name" ? event.target.value : event.target.checked,
       };
     });
-    console.log(inputName, hasTargetId);
     if (inputName === "isDone" && hasTargetId) {
       const taskIndex = chosenList.task.findIndex(
         (task) => task.id === +hasTargetId
