@@ -22,7 +22,7 @@ function App() {
       <Router>
         <Switch>
           <div className="App">
-            <Navbar />
+            <Navbar setJwt={setJwt} />
             {!jwt && (
               <Route exact path="/">
                 <Card>

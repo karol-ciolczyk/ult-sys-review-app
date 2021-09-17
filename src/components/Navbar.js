@@ -1,12 +1,18 @@
 import style from "./Navbar.module.css";
 import "./materialIcons.css";
 
-export const Navbar = function () {
+export const Navbar = function (props) {
+  const onLogOutHandler = function () {
+    props.setJwt(null);
+  };
+
   return (
     <div className={style.navbar}>
       <div className={style.logo}>ToDo - List</div>
       <div>
-        <span className="material-icons">logout</span>
+        <span onClick={onLogOutHandler} className="material-icons">
+          logout
+        </span>
       </div>
     </div>
   );
