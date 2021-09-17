@@ -6,8 +6,7 @@ import { Navbar } from "./components/Navbar";
 import { Card } from "./components/Card";
 import { Loginform } from "./components/LoginForm";
 import { SignUpForm } from "./components/SignUpForm";
-// import { TodoItem } from "./components/TodoItem";
-// import { TodoList } from "./components/TodoList";
+import { TodoList } from "./components/TodoList";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
@@ -21,16 +20,28 @@ function App() {
       }}
     >
       <Router>
-        <div className="App">
-          <Navbar />
-          <Card>
-            <Loginform setJwt={setJwt} />
-          </Card>
-          <Card>
-            <SignUpForm />
-          </Card>
-          {/* <TodoList /> */}
-        </div>
+        <Switch>
+          <div className="App">
+            <Navbar />
+            {!jwt && (
+              <Route exact path="/">
+                <Card>
+                  <Loginform setJwt={setJwt} />
+                </Card>
+              </Route>
+            )}
+            <Route path="/signup">
+              <Card>
+                <SignUpForm />
+              </Card>
+            </Route>
+            {jwt && (
+              <Route exact path="/">
+                <TodoList />
+              </Route>
+            )}
+          </div>
+        </Switch>
       </Router>
     </UserSessionContext.Provider>
   );
