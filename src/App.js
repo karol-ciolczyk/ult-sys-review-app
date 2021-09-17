@@ -31,9 +31,17 @@ function App() {
             <Navbar setJwt={setJwt} />
             {!jwt && (
               <Route exact path="/">
-                <Card>
-                  <Loginform setJwt={setJwt} setIsProgress={setIsProgress} />
-                </Card>
+                {!isProgress && (
+                  <Card>
+                    <Loginform setJwt={setJwt} setIsProgress={setIsProgress} />
+                  </Card>
+                )}
+                {isProgress && (
+                  <h1 style={{ color: "white", paddingTop: "20rem" }}>
+                    {" "}
+                    ... please wait for data{" "}
+                  </h1>
+                )}
               </Route>
             )}
             <Route path="/signup">

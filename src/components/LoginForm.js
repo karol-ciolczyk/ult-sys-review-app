@@ -41,7 +41,8 @@ export const Loginform = function (props) {
         localStorage.setItem("jwt", `${data.jwt}`);
         props.setJwt(data.jwt);
       } catch (err) {
-        console.log(err);
+        alert(err);
+        props.setIsProgress(false);
       }
     })();
   };
