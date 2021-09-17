@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button } from "./Button";
 
 import style from "./SignUpForm.module.css";
 
-export const SignUpForm = function () {
+export const SignUpForm = function (props) {
   const [signUpData, setSignUpData] = useState({});
+  const history = useHistory();
 
   const inputDataHandler = function (event) {
     setSignUpData((previous) => {
@@ -18,6 +19,7 @@ export const SignUpForm = function () {
 
   const onSubmitHandler = function (event) {
     event.preventDefault();
+    props.setIsProgress(true);
 
     (async function () {
       try {
@@ -36,10 +38,12 @@ export const SignUpForm = function () {
         if (!response.ok) {
           throw TypeError(data.message[0].messages[0].message);
         }
-        console.log(response, data);
+        history.push("/");
       } catch (err) {
+        alert(err);
         console.log(err);
       }
+      props.setIsProgress(false);
     })();
   };
 
@@ -47,7 +51,7 @@ export const SignUpForm = function () {
     <div className={style.SignUpForm}>
       <Link to="/">
         <div className={style.buttonBack}>
-          <span class="material-icons">west</span>
+          <span className="material-icons">west</span>
         </div>
       </Link>
       <h1 className={style.header}> Create an new account </h1>

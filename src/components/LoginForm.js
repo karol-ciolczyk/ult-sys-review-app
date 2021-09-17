@@ -36,13 +36,12 @@ export const Loginform = function (props) {
         if (!response.ok) {
           throw TypeError(data.message[0].messages[0].message);
         }
-        props.setIsProgress(false);
         localStorage.setItem("jwt", `${data.jwt}`);
         props.setJwt(data.jwt);
       } catch (err) {
         alert(err);
-        props.setIsProgress(false);
       }
+      props.setIsProgress(false);
     })();
   };
 

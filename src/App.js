@@ -12,7 +12,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 function App() {
   const [jwt, setJwt] = useState(null);
   const [isProgress, setIsProgress] = useState(false);
-  console.log(isProgress);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
@@ -45,9 +44,17 @@ function App() {
               </Route>
             )}
             <Route path="/signup">
-              <Card>
-                <SignUpForm />
-              </Card>
+              {!isProgress && (
+                <Card>
+                  <SignUpForm setIsProgress={setIsProgress} />
+                </Card>
+              )}
+              {isProgress && (
+                <h1 style={{ color: "white", paddingTop: "20rem" }}>
+                  {" "}
+                  ... please wait for data{" "}
+                </h1>
+              )}
             </Route>
             {jwt && (
               <Route exact path="/">
