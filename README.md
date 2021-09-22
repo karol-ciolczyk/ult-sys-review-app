@@ -25,3 +25,7 @@ Builds the app for production to the `build` folder.\
 ### `LogIn form and signup form view:`
 
 ![](./files/login.png) ![](./files/signup.png)
+
+### `List view:`
+
+![](./files/todo-list.png)
