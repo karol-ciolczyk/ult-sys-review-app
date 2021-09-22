@@ -48,6 +48,6 @@ Builds the app for production to the `build` folder.\
 
 - At the top of the modal there is an input of all lists and you can jump through them
 - It is possible to remove more than one list at once and then save this changes
-- If you manipulate tasks of the chosen list you have to save changes before jump to another list
+- If you manipulate tasks of the selected list you have to save changes before jump to another list
 
 ![](./files/remove-change-list-tasks.png)
