@@ -39,7 +39,7 @@ Builds the app for production to the `build` folder.\
 ### `New list modal:`
 
 - You can create new list and add new tasks to this list
-- There is no possibility to check task as done
+- There is no possibility to mark task as done
 - At the end you have to click the "SAVE" to keep changes and view them in the list immediately after your save
 
 ![](./files/new-list.png)
