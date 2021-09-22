@@ -28,4 +28,8 @@ Builds the app for production to the `build` folder.\
 
 ### `List view:`
 
+- after click list element you get modal of list details like its tasks and possobility of manipulation of this list like checking task as done and remove lists
+
+- after select "plus icon" you get new list modal where you can create new list and its tasks.
+
 ![](./files/todo-list.png)
